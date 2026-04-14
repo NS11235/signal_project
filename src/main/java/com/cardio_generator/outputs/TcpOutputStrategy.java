@@ -12,6 +12,12 @@ public class TcpOutputStrategy implements OutputStrategy {
     private Socket clientSocket;
     private PrintWriter out;
 
+    /**
+    * Implements {@link OutputStrategy} by streaming patient data to a TCP client.
+    *  {@link ServerSocket} is opened on the specified port and a background thread 
+    * waits for a connection and when a client connects, the data records are sent to
+    * that client as coma-separated strings.
+    */
     public TcpOutputStrategy(int port) {
         try {
             serverSocket = new ServerSocket(port);

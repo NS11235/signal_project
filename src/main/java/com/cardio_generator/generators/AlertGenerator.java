@@ -2,13 +2,22 @@ package com.cardio_generator.generators;
 
 import java.util.Random;
 
+import com.alerts.Alert;
 import com.cardio_generator.outputs.OutputStrategy;
+import com.data_management.DataStorage;
 
 public class AlertGenerator implements PatientDataGenerator {
 
     public static final Random randomGenerator = new Random();
     private boolean[] AlertStates; // false = resolved, true = pressed
 
+    /**
+    * Monitors patient data and sends an alert when health conditions are triggered.
+    * These are: unusual heart-rate, blood pressure and blood sauration
+    * This class gets the patient data from a {@link DataStorage} instance and compares
+    * it to health criteria. When a condition is triggered a {@link Alert}
+    * is created and passed to {@link #triggerAlert}.
+    */
     public AlertGenerator(int patientCount) {
         AlertStates = new boolean[patientCount + 1];
     }
@@ -17,7 +26,7 @@ public class AlertGenerator implements PatientDataGenerator {
     public void generate(int patientId, OutputStrategy outputStrategy) {
         try {
             if (AlertStates[patientId]) {
-                if (randomGenerator.nextDouble() < 0.9) { // 90% chance to resolve
+                if (randomGenerator.nextDouble() < 0.9) { 
                     AlertStates[patientId] = false;
                     // Output the alert
                     outputStrategy.output(patientId, System.currentTimeMillis(), "Alert", "resolved");
