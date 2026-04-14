@@ -10,6 +10,7 @@ import com.data_management.Patient;
  * it against specific health criteria.
  */
 public class AlertGenerator {
+    
     private DataStorage dataStorage;
 
     /**
@@ -17,8 +18,7 @@ public class AlertGenerator {
      * The {@code DataStorage} is used to retrieve patient data that this class
      * will monitor and evaluate.
      *
-     * @param dataStorage the data storage system that provides access to patient
-     *                    data
+     * @param dataStorage the data storage system that provides access to patient data
      */
     public AlertGenerator(DataStorage dataStorage) {
         this.dataStorage = dataStorage;
@@ -27,10 +27,8 @@ public class AlertGenerator {
     /**
      * Evaluates the specified patient's data to determine if any alert conditions
      * are met. If a condition is met, an alert is triggered via the
-     * {@link #triggerAlert}
-     * method. This method should define the specific conditions under which an
-     * alert
-     * will be triggered.
+     * {@link #triggerAlert} method. This method should define the specific 
+     * conditions under which an alert will be triggered.
      *
      * @param patient the patient data to evaluate for alert conditions
      */
