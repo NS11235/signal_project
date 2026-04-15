@@ -66,4 +66,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Project Members
 - Nora Simionescu: 6383674
-- Student ID: 87654321
+- Peru Gangoiti: 6381041
