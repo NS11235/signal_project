@@ -25,6 +25,18 @@ public class FileOutputStrategy implements OutputStrategy {
         this.baseDirectory = baseDirectory;
     }
 
+    /**
+     * Writes formatted patient data to a file associated with the given label.
+     *
+     * @param patientId identifier for the patient
+     * @param timestamp timestamp for data entry
+     * @param label used to determine the output file
+     * @param data data to be written to the file
+     *
+     * @return void
+     * 
+     * @throws RuntimeException if an unexpected error occurs during file writing
+     */
     @Override
     public void output(int patientId, long timestamp, String label, String data) {
         try {
