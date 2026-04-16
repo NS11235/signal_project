@@ -23,6 +23,16 @@ public class AlertGenerator implements PatientDataGenerator {
         alertStates = new boolean[patientCount + 1];
     }
 
+    /**
+     * Generates alert events for a given patient
+     *
+     * @param patientId identifier for the patient whom the alert is generated
+     * @param outputStrategy strategy used to output alert events
+     *
+     * @return void
+     * 
+     * @throws RuntimeException if an error occurs during alert generation or output
+     */
     @Override
     public void generate(int patientId, OutputStrategy outputStrategy) {
         try {
