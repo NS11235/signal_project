@@ -14,32 +14,35 @@ import java.util.concurrent.ConcurrentHashMap;
 public class FileOutputStrategy implements OutputStrategy {
 
     /** The base directory where output files are put. */
-    private String BaseDirectory;
+    // Changed BaseDirectory to baseDirectory according to section 5.2.5
+    private String baseDirectory;
 
     /** Maps each label to its corresponding file path. */
-    public final ConcurrentHashMap<String, String> file_map = new ConcurrentHashMap<>();
+    // Changed file_map to fileMap according to section 5.2.4 non-static
+    public final ConcurrentHashMap<String, String> fileMap = new ConcurrentHashMap<>();
 
     public FileOutputStrategy(String baseDirectory) {
-        this.BaseDirectory = baseDirectory;
+        this.baseDirectory = baseDirectory;
     }
 
     @Override
     public void output(int patientId, long timestamp, String label, String data) {
         try {
-          Files.createDirectories(Paths.get(BaseDirectory));
+          Files.createDirectories(Paths.get(baseDirectory));
         } catch (IOException e) {
             System.err.println("Error creating base directory: " + e.getMessage());
             return;
         }
 
-        String FilePath = file_map.computeIfAbsent(
-            label, k -> Paths.get(BaseDirectory, label + ".txt").toString());
+        // Changed FilePath to filePath according to section 5.2.5
+        String filePath = fileMap.computeIfAbsent(
+            label, k -> Paths.get(baseDirectory, label + ".txt").toString());
 
         try (PrintWriter out = new PrintWriter(
-                Files.newBufferedWriter(Paths.get(FilePath), StandardOpenOption.CREATE, StandardOpenOption.APPEND))) {
+                Files.newBufferedWriter(Paths.get(filePath), StandardOpenOption.CREATE, StandardOpenOption.APPEND))) {
             out.printf("Patient ID: %d, Timestamp: %d, Label: %s, Data: %s%n", patientId, timestamp, label, data);
         } catch (Exception e) {
-            System.err.println("Error writing to file " + FilePath + ": " + e.getMessage());
+            System.err.println("Error writing to file " + filePath + ": " + e.getMessage());
         }
     }
 }
