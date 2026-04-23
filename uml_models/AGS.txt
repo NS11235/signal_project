@@ -1,0 +1,14 @@
+Starting with the provided classes: AlertGenerator, Alert, and AlertManager. 
+We decided that Alert needed to have getter methods for all the provided fields as we found that all the fields held important information outside the Alert object itself, 
+and we didnt give it any setter methods as Alerts are unique given the timestamp identifier, 
+and all the values for the fields in the Alert object are already known at the time that an Alert object would be created. 
+Moving on to the AlertManager, 
+we decided it should hold Alerts in a List, 
+as the newest alerts would logically be the most important to retrieve, 
+and a List allows us to insert alerts at the front, giving a better average runtime compared to an array, 
+to emphasise the importance of fast retrieval, 
+we made it so that Alerts could be resolved and removed from the list, 
+removing any clutter. 
+We took note of the hint provided in the requirements document and created an interface AlertStrategy through which AlertGenerator could trigger the evaluation of any kind of alert threshold for any patient, 
+allowing for future scalability.
+We also added a standard ThresholdAlert that inherits the AlertStrategy so that any kind of threshold can be defined via a String field naming the condition and then the threshold value which is what the triggering of the Alert will be based on.
