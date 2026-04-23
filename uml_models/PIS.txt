@@ -1,0 +1,12 @@
+Here, PatientIdentifier acts as the class that the rest of the code interfaces with, 
+leaving the rest as a black box, 
+making it a lot easier to work with the code as the rest of the code only has to know that it needs to give its information to PatientIdentifier, 
+and get its response from PatientIdentifier. 
+PatientIdentifier then uses IdentityManager which was made to hold the data itself in the form of a Map data structure, 
+this was chosen for a similar reason as the Map in Data Storage System as this allows for instant patient lookup based on ID. 
+Standard methods for registering a patient and looking up a patient were made for the IdentityManager, 
+while also having a handleMismatch method to handle any mismatches or anomalies as stated in the requirements. 
+A class was also added called MismatchHandler for division of responsibilities among classes for better readable and workable code for future scalability. 
+The HospitalPatient was made to hold all kinds of information that would be used in the rest of the program, 
+taken from the Hospital’s data base, 
+while keeping the getter methods limited to avoid private patient information being leaked into the rest of the code.
