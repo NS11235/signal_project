@@ -1,0 +1,11 @@
+We decided that the patient records would use a Map data structure that sorts patient data by patientID, 
+as each patientID is unique to the patient, 
+and Maps allow us to then associate a List of patient data to said patientID so it seemed like the perfect fit for O(1) retrieval of patient data. We approached the uniqueness of PatientData in the same way that we did Alerts, 
+timestamps allow for complete uniqueness of a recording of PatientData, 
+and setters are again ignored for the same reasons as Alerts. 
+We also included a deleteOldRecords method to DataStorage as per the hint suggesting old records be deleted to save on space. 
+Given the delicacy of the data being handled, 
+it is important to set safeguards so that this confidencial and private data doesnt end up easily being accessible by malicious users, 
+so AcessController was added to guard data via working with DataRetriever, 
+instead of with DataStorage directly, to avoid any bugs that could mess with the data itself, 
+and instead on the retrieval of it. A DataDeletionPolicy class is added so that the data deletion policy isnt hard coded and can change according to data policies changing over time.
