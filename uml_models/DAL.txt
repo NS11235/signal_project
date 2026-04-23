@@ -1,0 +1,13 @@
+As per the requirements,
+we made three subclasses that inherit from an abstract class DataListener, 
+we decided that a boolean isConnected, a connect method, 
+a disconnect method, 
+and a listen method were what all the subclasses would have in common. 
+From there, we decided that the differences lied in the fields, 
+while the methods overrid the abstract class’s methods. 
+This allowed us to rely on the common methods to get the information that we need, 
+without having to specifically check what kind of listener we were using. 
+The information received from the Listeners would be used by the DataSourceAdapter which would listen on any information received and store it in a field, 
+to be parsed by the DataParser, 
+this chain of information of passing from one object to the next was chosen to abide by the single responsibility principle, 
+allowing the DataSourceAdapter to take the responsibility of storing the data and preparing it for the parser rather than the parser immediately parsing data as received.
