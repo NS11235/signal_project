@@ -34,7 +34,7 @@ public class FileOutputStrategy implements OutputStrategy {
      * @param data data to be written to the file
      *
      * @return void
-     * 
+     *
      * @throws RuntimeException if an unexpected error occurs during file writing
      */
     @Override

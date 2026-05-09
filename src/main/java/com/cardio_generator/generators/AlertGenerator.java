@@ -30,7 +30,7 @@ public class AlertGenerator implements PatientDataGenerator {
      * @param outputStrategy strategy used to output alert events
      *
      * @return void
-     * 
+     *
      * @throws RuntimeException if an error occurs during alert generation or output
      */
     @Override
