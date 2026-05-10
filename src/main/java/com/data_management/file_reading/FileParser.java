@@ -1,4 +1,7 @@
-package com.data_management;
+package com.data_management.file_reading;
+
+import com.data_management.DataStorage;
+import com.data_management.arguments_handling.ArgParser;
 
 import java.io.IOException;
 

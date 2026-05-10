@@ -1,4 +1,4 @@
-package com.data_management;
+package com.data_management.arguments_handling;
 
 import java.io.IOException;
 import java.util.ArrayList;
