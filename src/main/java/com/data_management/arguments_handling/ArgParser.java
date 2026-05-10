@@ -5,9 +5,9 @@ import java.util.ArrayList;
 
 public class ArgParser implements ArgReader {
 
-    String args;
+    String[] args;
 
-    public ArgParser(String args){
+    public ArgParser(String[] args){
         this.args = args;
     }
 

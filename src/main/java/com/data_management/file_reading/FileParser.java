@@ -11,10 +11,10 @@ public class FileParser implements DataReader {
     ArgParser reader;
 
     public FileParser(String[] args) throws IOException {
-        if(path.trim().isEmpty()) {
+        if(args.length == 0) {
             throw new IOException("File path empty or just spaces");
         }
-        reader = new ArgParser(path);
+        reader = new ArgParser(args);
         this.path = reader.getPath();
 
     }
