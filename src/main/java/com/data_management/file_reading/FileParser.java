@@ -5,6 +5,7 @@ import com.data_management.DataStorage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class FileParser implements DataReader {
@@ -27,10 +28,18 @@ public class FileParser implements DataReader {
         }
 
         Scanner scanner = new Scanner(file);
-
+        ArrayList<String[]> data = new ArrayList<>();
         while(scanner.hasNextLine()) {
             String line = scanner.nextLine();
-            line.split(", ");
+            String[] dataLine = new String[4];
+            dataLine[0] = line.split(", ")[0].substring("Patient ID: ".length());
+            dataLine[1] = line.split(", ")[1].substring("Timestamp: ".length());
+            dataLine[2] = line.split(", ")[2].substring("Label: ".length());
+            dataLine[3] = line.split(", ")[3].substring("Data: ".length());
+            data.add(dataLine);
+        }
+        for (String[] dataLine : data) {
+            dataStorage.addPatientData(Integer.parseInt(dataLine[0]), Double.parseDouble(dataLine[1]), dataLine[2], Long.parseLong(dataLine[3]));
         }
     }
 }
