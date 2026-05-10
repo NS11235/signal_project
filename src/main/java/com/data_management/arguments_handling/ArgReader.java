@@ -1,8 +1,8 @@
 package com.data_management.arguments_handling;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Map;
 
 public interface ArgReader {
-    public ArrayList<String> readArguments() throws IOException;
+    Map<String, String> readArguments() throws IOException;
 }
