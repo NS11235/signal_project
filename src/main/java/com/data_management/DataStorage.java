@@ -85,7 +85,7 @@ public class DataStorage {
      */
     public static void main(String[] args) throws IOException {
         // DataReader is not defined in this scope, should be initialized appropriately.
-        DataReader reader = new FileParser("path/to/data");
+        DataReader reader = new FileParser(args);
         DataStorage storage = new DataStorage();
 
         // Assuming the reader has been properly initialized and can read data into the
