@@ -39,6 +39,18 @@ import java.util.ArrayList;
  * </pre>
  */
 public class HealthDataSimulator {
+    private static HealthDataSimulator instance; 
+
+    private HealthDataSimulator() {}    
+
+    public static HealthDataSimulator getInstance()
+    {  
+        if (instance==null)
+        {
+            instance=new HealthDataSimulator();
+        }
+        return instance;
+    }
 
     /** The number of patients to simulate. Default of 50. */
     private static int patientCount = 50; 
