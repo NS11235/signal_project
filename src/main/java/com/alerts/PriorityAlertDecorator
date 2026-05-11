@@ -1,0 +1,12 @@
+package com.alerts;
+
+public class PriorityAlertDEC extends AlertDecorator {
+    public PriorityAlertDEC(Alert alert) {
+        super(alert);
+    }
+
+    @Override
+    public String getCondition() {
+        return "PRIORITY! " + decoratedAlert.getCondition();
+    }
+}

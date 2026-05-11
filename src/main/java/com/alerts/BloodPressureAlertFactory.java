@@ -2,8 +2,8 @@ package com.alerts;
 
 public class BloodPressureAlertFactory extends AlertFactory{
     @Override
-    public Alert createAlert(String patientId, String condition, long timestamp) 
+    public AlertClassic createAlert(String patientId, String condition, long timestamp) 
     {
-        return new Alert(patientId, "Blood-pressure: " + condition, timestamp);
+        return new AlertClassic(patientId, "Blood-pressure: " + condition, timestamp);
     }
 }

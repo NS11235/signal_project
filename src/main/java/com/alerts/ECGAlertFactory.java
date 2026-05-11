@@ -2,8 +2,8 @@ package com.alerts;
 
 public class ECGAlertFactory extends AlertFactory {
     @Override
-    public Alert createAlert(String patientId, String condition, long timestamp) 
+    public AlertClassic createAlert(String patientId, String condition, long timestamp) 
     {
-        return new Alert(patientId, "ECG" + condition, timestamp);
+        return new AlertClassic(patientId, "ECG" + condition, timestamp);
     }
 }
