@@ -16,6 +16,7 @@ public class FileParser implements DataReader {
         if(args.length == 0) {
             throw new IOException("File path empty or just spaces");
         }
+        path = args[0];
     }
 
     // addPatientData(int patientId, double measurementValue, String recordType, long timestamp)
@@ -39,7 +40,11 @@ public class FileParser implements DataReader {
             data.add(dataLine);
         }
         for (String[] dataLine : data) {
-            dataStorage.addPatientData(Integer.parseInt(dataLine[0]), Double.parseDouble(dataLine[1]), dataLine[2], Long.parseLong(dataLine[3]));
+            dataStorage.addPatientData(
+                    Integer.parseInt(dataLine[0]),
+                    Double.parseDouble(dataLine[3]),
+                    dataLine[2],
+                    Long.parseLong(dataLine[1]));
         }
     }
 }
