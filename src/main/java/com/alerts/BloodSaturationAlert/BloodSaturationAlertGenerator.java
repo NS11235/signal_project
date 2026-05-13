@@ -16,6 +16,7 @@ public class BloodSaturationAlertGenerator {
                 saturationRecords.add(record);
             }
         }
+        checkSaturation(patient, saturationRecords);
     }
 
     private void checkSaturation(Patient patient, List<PatientRecord> records) {
