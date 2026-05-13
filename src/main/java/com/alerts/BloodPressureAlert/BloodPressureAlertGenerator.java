@@ -46,8 +46,8 @@ public class BloodPressureAlertGenerator {
         double secondMeasure = records.get(records.size()-  2).getMeasurementValue();
         double thirdMeasure = records.get(records.size()-  1).getMeasurementValue();
 
-        boolean isIncreasing = ((secondMeasure - firstMeasure) > 0) && (thirdMeasure - secondMeasure > 0);
-        boolean isDecreasing = ((firstMeasure - secondMeasure) > 0) && (secondMeasure - thirdMeasure > 0);
+        boolean isIncreasing = ((secondMeasure - firstMeasure) > 10) && (thirdMeasure - secondMeasure > 10);
+        boolean isDecreasing = ((firstMeasure - secondMeasure) > 10) && (secondMeasure - thirdMeasure > 10);
 
         if (isIncreasing) {
             String condition = type + " Trend Increasing";
