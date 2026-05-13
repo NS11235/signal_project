@@ -1,5 +1,7 @@
 package com.alerts;
 
+import com.alerts.BloodPressureAlert.BloodPressureAlert;
+import com.alerts.BloodPressureAlert.BloodPressureAlertGenerator;
 import com.data_management.DataStorage;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;
@@ -39,30 +41,16 @@ public class AlertGenerator {
     public void evaluateData(Patient patient) {
         List<PatientRecord> records = dataStorage.getRecords(patient.getPatientId(), 0, Long.MAX_VALUE);
 
-        List<PatientRecord> systolicRecords = new ArrayList<>();
-        List<PatientRecord> diastolicRecords = new ArrayList<>();
+        boolean hasBloodPressureRecords = false;
+
         for  (PatientRecord record : records) {
-            if (record.getRecordType().contains("SystolicPressure")) {
-                systolicRecords.add(record);
-            } else if (record.getRecordType().contains("DiastolicPressure")) {
-                diastolicRecords.add(record);
+            if (record.getRecordType().contains("SystolicPressure") || record.getRecordType().contains("DiastolicPressure")) {
+                hasBloodPressureRecords = true;
             }
         }
-
-        checkTrend(patient, systolicRecords, "SystolicPressure");
-        checkTrend(patient, diastolicRecords, "DiastolicPressure");
-
-        if (!systolicRecords.isEmpty()) {
-            double latestSystolic = systolicRecords.get(systolicRecords.size() - 1).getMeasurementValue();
-            if (latestSystolic > 180 || latestSystolic < 90) {
-                triggerAlert(new BloodPressureAlert(patient.getPatientId(), "Systolic Critical Threshold", System.currentTimeMillis(), latestSystolic));
-            }
-        }
-        if (!diastolicRecords.isEmpty()) {
-            double latestDiastolic =  diastolicRecords.get(diastolicRecords.size() - 1).getMeasurementValue();
-            if (latestDiastolic > 120 || latestDiastolic < 60) {
-                triggerAlert(new BloodPressureAlert(patient.getPatientId(), "Diastolic Critical Threshold", System.currentTimeMillis(), latestDiastolic));
-            }
+        if (hasBloodPressureRecords) {
+            BloodPressureAlertGenerator bloodPressureAlertGenerator = new BloodPressureAlertGenerator();
+            bloodPressureAlertGenerator.evaluateData(patient, records);
         }
     }
 
