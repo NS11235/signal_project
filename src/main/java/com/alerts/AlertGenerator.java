@@ -2,6 +2,7 @@ package com.alerts;
 
 import com.alerts.BloodPressureAlert.BloodPressureAlert;
 import com.alerts.BloodPressureAlert.BloodPressureAlertGenerator;
+import com.alerts.BloodSaturationAlert.BloodSaturationAlertGenerator;
 import com.data_management.DataStorage;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;
@@ -56,7 +57,8 @@ public class AlertGenerator {
             bloodPressureAlertGenerator.evaluateData(patient, records);
         }
         if (hasBloodSaturationRecords) {
-
+            BloodSaturationAlertGenerator bloodSaturationAlertGenerator = new BloodSaturationAlertGenerator();
+            bloodSaturationAlertGenerator.evaluateData(patient, records);
         }
     }
 
