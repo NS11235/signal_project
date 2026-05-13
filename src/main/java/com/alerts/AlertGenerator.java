@@ -42,15 +42,21 @@ public class AlertGenerator {
         List<PatientRecord> records = dataStorage.getRecords(patient.getPatientId(), 0, Long.MAX_VALUE);
 
         boolean hasBloodPressureRecords = false;
+        boolean hasBloodSaturationRecords = false;
 
         for  (PatientRecord record : records) {
             if (record.getRecordType().contains("SystolicPressure") || record.getRecordType().contains("DiastolicPressure")) {
                 hasBloodPressureRecords = true;
+            } else if (record.getRecordType().contains("BloodSaturation")) {
+                hasBloodSaturationRecords = true;
             }
         }
         if (hasBloodPressureRecords) {
             BloodPressureAlertGenerator bloodPressureAlertGenerator = new BloodPressureAlertGenerator();
             bloodPressureAlertGenerator.evaluateData(patient, records);
+        }
+        if (hasBloodSaturationRecords) {
+
         }
     }
 

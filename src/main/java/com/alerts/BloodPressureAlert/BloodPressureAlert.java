@@ -35,4 +35,12 @@ public class BloodPressureAlert implements Alert {
     public long getTimestamp() {
         return timestamp;
     }
+
+    public double getSystolic() {
+        return systolic;
+    }
+
+    public double getDiastolic() {
+        return diastolic;
+    }
 }
