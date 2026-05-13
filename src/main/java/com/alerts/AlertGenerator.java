@@ -54,29 +54,6 @@ public class AlertGenerator {
         }
     }
 
-
-    private void checkTrend(Patient patient, List<PatientRecord> records, String type) {
-        if (records.size() < 3) {
-            return;
-        }
-
-        double firstMeasure = records.get(records.size()-  3).getMeasurementValue();
-        double secondMeasure = records.get(records.size()-  2).getMeasurementValue();
-        double thirdMeasure = records.get(records.size()-  1).getMeasurementValue();
-
-        boolean isIncreasing = ((secondMeasure - firstMeasure) > 0) && (thirdMeasure - secondMeasure > 0);
-        boolean isDecreasing = ((firstMeasure - secondMeasure) > 0) && (secondMeasure - thirdMeasure > 0);
-
-        if (isIncreasing) {
-            String condition = type + " Trend Increasing";
-            triggerAlert(new BloodPressureAlert(patient.getPatientId(), condition, System.currentTimeMillis(), thirdMeasure));
-        } else if (isDecreasing) {
-            String condition = type + " Trend Decreasing";
-            triggerAlert(new BloodPressureAlert(patient.getPatientId(), condition, System.currentTimeMillis(), thirdMeasure));
-        }
-
-    }
-
     /**
      * Triggers an alert for the monitoring system. This method can be extended to
      * notify medical staff, log the alert, or perform other actions. The method
