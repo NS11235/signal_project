@@ -55,11 +55,11 @@ public class AlertGenerator {
             }
         }
         if (hasBloodPressureRecords) {
-            BloodPressureAlertGenerator bloodPressureAlertGenerator = new BloodPressureAlertGenerator();
+            BloodPressureAlertGenerator bloodPressureAlertGenerator = new BloodPressureAlertGenerator(outputStrategy);
             bloodPressureAlertGenerator.evaluateData(patient, records);
         }
         if (hasBloodSaturationRecords) {
-            BloodSaturationAlertGenerator bloodSaturationAlertGenerator = new BloodSaturationAlertGenerator();
+            BloodSaturationAlertGenerator bloodSaturationAlertGenerator = new BloodSaturationAlertGenerator(outputStrategy);
             bloodSaturationAlertGenerator.evaluateData(patient, records);
         }
         if (hasBloodPressureRecords && hasBloodSaturationRecords) {

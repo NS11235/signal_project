@@ -1,6 +1,7 @@
 package com.alerts.BloodSaturationAlert;
 
 import com.alerts.Alert;
+import com.alerts.alert_outputs.AlertOutputStrategy;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;
 
@@ -8,6 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BloodSaturationAlertGenerator {
+
+    private final AlertOutputStrategy outputStrategy;
+
+    public BloodSaturationAlertGenerator(AlertOutputStrategy outputStrategy) {
+        this.outputStrategy = outputStrategy;
+    }
 
     public void evaluateData(Patient patient, List<PatientRecord> records) {
         List<PatientRecord> saturationRecords = new ArrayList<>();
@@ -50,6 +57,6 @@ public class BloodSaturationAlertGenerator {
     }
 
     private void triggerAlert(Alert alert) {
-
+        outputStrategy.output(alert);
     }
 }

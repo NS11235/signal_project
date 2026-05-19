@@ -1,6 +1,7 @@
 package com.alerts.BloodPressureAlert;
 
 import com.alerts.Alert;
+import com.alerts.alert_outputs.AlertOutputStrategy;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;
 
@@ -8,6 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BloodPressureAlertGenerator {
+
+    private final AlertOutputStrategy outputStrategy;
+
+    public BloodPressureAlertGenerator(AlertOutputStrategy outputStrategy) {
+        this.outputStrategy = outputStrategy;
+    }
 
     public void evaluateData(Patient patient, List<PatientRecord> records) {
         List<PatientRecord> systolicRecords = new ArrayList<>();
@@ -60,6 +67,6 @@ public class BloodPressureAlertGenerator {
     }
 
     private void triggerAlert(Alert alert) {
-        // Implementation might involve logging the alert or notifying staff
+        outputStrategy.output(alert);
     }
 }
