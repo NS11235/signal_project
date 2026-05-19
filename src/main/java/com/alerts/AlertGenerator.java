@@ -50,7 +50,8 @@ public class AlertGenerator {
         for  (PatientRecord record : records) {
             if (record.getRecordType().contains("SystolicPressure") || record.getRecordType().contains("DiastolicPressure")) {
                 hasBloodPressureRecords = true;
-            } else if (record.getRecordType().contains("BloodSaturation")) {
+            }
+            if (record.getRecordType().contains("BloodSaturation")) {
                 hasBloodSaturationRecords = true;
             }
         }
