@@ -1,7 +1,8 @@
 package data_management;
 
-import com.alerts.HypotensiveHypoxemiaAlert.HypotensiveHypoxemiaAlert;
 import com.alerts.HypotensiveHypoxemiaAlert.HypotensiveHypoxemiaAlertGenerator;
+import com.alerts.alert_outputs.AlertOutputStrategy;
+import com.alerts.alert_outputs.ConsoleAlertOutputStrategy;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;
 import org.junit.jupiter.api.Test;
@@ -16,7 +17,8 @@ public class HypotensiveHypoxemiaAlertGeneratorTest {
         patient.addRecord(91, "BloodSaturation", System.currentTimeMillis());
 
         List<PatientRecord> records = patient.getRecords(0, System.currentTimeMillis());
-        HypotensiveHypoxemiaAlertGenerator generator = new HypotensiveHypoxemiaAlertGenerator();
+        AlertOutputStrategy outputStrategy = new ConsoleAlertOutputStrategy();
+        HypotensiveHypoxemiaAlertGenerator generator = new HypotensiveHypoxemiaAlertGenerator(outputStrategy);
         generator.evaluateData(patient, records);
     }
 }

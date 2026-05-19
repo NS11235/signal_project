@@ -1,13 +1,14 @@
 package com.alerts;
 
-import com.alerts.BloodPressureAlert.BloodPressureAlert;
 import com.alerts.BloodPressureAlert.BloodPressureAlertGenerator;
 import com.alerts.BloodSaturationAlert.BloodSaturationAlertGenerator;
+import com.alerts.HypotensiveHypoxemiaAlert.HypotensiveHypoxemiaAlertGenerator;
+import com.alerts.alert_outputs.AlertOutputStrategy;
+import com.alerts.alert_outputs.ConsoleAlertOutputStrategy;
 import com.data_management.DataStorage;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,7 +19,8 @@ import java.util.List;
  */
 public class AlertGenerator {
     
-    private DataStorage dataStorage;
+    private final DataStorage dataStorage;
+    private final AlertOutputStrategy outputStrategy;
 
     /**
      * Constructs an {@code AlertGenerator} with a specified {@code DataStorage}.
@@ -29,6 +31,7 @@ public class AlertGenerator {
      */
     public AlertGenerator(DataStorage dataStorage) {
         this.dataStorage = dataStorage;
+        this.outputStrategy = new ConsoleAlertOutputStrategy();
     }
 
     /**
@@ -59,6 +62,10 @@ public class AlertGenerator {
         if (hasBloodSaturationRecords) {
             BloodSaturationAlertGenerator bloodSaturationAlertGenerator = new BloodSaturationAlertGenerator();
             bloodSaturationAlertGenerator.evaluateData(patient, records);
+        }
+        if (hasBloodPressureRecords && hasBloodSaturationRecords) {
+            HypotensiveHypoxemiaAlertGenerator hypotensiveHypoxemiaAlertGenerator = new HypotensiveHypoxemiaAlertGenerator(outputStrategy);
+            hypotensiveHypoxemiaAlertGenerator.evaluateData(patient, records);
         }
     }
 

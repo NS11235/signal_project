@@ -1,12 +1,19 @@
 package com.alerts.HypotensiveHypoxemiaAlert;
 
 import com.alerts.Alert;
+import com.alerts.alert_outputs.AlertOutputStrategy;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;
 
 import java.util.List;
 
 public class HypotensiveHypoxemiaAlertGenerator {
+
+    private final AlertOutputStrategy outputStrategy;
+
+    public HypotensiveHypoxemiaAlertGenerator(AlertOutputStrategy outputStrategy) {
+        this.outputStrategy = outputStrategy;
+    }
 
     public void evaluateData(Patient patient, List<PatientRecord> records) {
         PatientRecord latestSystolic = null;
@@ -43,6 +50,6 @@ public class HypotensiveHypoxemiaAlertGenerator {
     }
 
     private void triggerAlert(Alert alert) {
-
+        outputStrategy.output(alert);
     }
 }
