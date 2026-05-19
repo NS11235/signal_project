@@ -1,4 +1,4 @@
-package data_management;
+package Alerts.AlertGenerators;
 
 import com.alerts.HypotensiveHypoxemiaAlert.HypotensiveHypoxemiaAlertGenerator;
 import com.alerts.alert_outputs.AlertOutputStrategy;
