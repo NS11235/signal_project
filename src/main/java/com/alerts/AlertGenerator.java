@@ -36,9 +36,8 @@ public class AlertGenerator {
 
     /**
      * Evaluates the specified patient's data to determine if any alert conditions
-     * are met. If a condition is met, an alert is triggered via the
-     * {@link #triggerAlert} method. This method should define the specific 
-     * conditions under which an alert will be triggered.
+     * are met. If a condition is met, the respective Alert Generator will trigger
+     * an alert output.
      *
      * @param patient the patient data to evaluate for alert conditions
      */
@@ -67,17 +66,5 @@ public class AlertGenerator {
             HypotensiveHypoxemiaAlertGenerator hypotensiveHypoxemiaAlertGenerator = new HypotensiveHypoxemiaAlertGenerator(outputStrategy);
             hypotensiveHypoxemiaAlertGenerator.evaluateData(patient, records);
         }
-    }
-
-    /**
-     * Triggers an alert for the monitoring system. This method can be extended to
-     * notify medical staff, log the alert, or perform other actions. The method
-     * currently assumes that the alert information is fully formed when passed as
-     * an argument.
-     *
-     * @param alert the alert object containing details about the alert condition
-     */
-    private void triggerAlert(Alert alert) {
-        // Implementation might involve logging the alert or notifying staff
     }
 }
