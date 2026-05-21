@@ -2,6 +2,7 @@ package com.alerts;
 
 import com.alerts.BloodPressureAlert.BloodPressureAlertGenerator;
 import com.alerts.BloodSaturationAlert.BloodSaturationAlertGenerator;
+import com.alerts.ECGAlert.ECGAlert;
 import com.alerts.ECGAlert.ECGAlertGenerator;
 import com.alerts.HypotensiveHypoxemiaAlert.HypotensiveHypoxemiaAlertGenerator;
 import com.alerts.alert_outputs.AlertOutputStrategy;
@@ -73,8 +74,11 @@ public class AlertGenerator {
             hypotensiveHypoxemiaAlertGenerator.evaluateData(patient, records);
         }
         if (hasECGRecords) {
-            ECGAlertGenerator ecgAlertGenerator = new ECGAlertGenerator(outputStrategy);
-            ecgAlertGenerator.evaluateData(patient, records);
+            ECGAlertGenerator ecgAlertGenerator = new ECGAlertGenerator();
+            Alert alert = ecgAlertGenerator.evaluateData(patient, records);
+            if (alert instanceof ECGAlert) {
+                outputStrategy.output(alert);
+            }
         }
     }
 }
