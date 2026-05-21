@@ -1,8 +1,7 @@
 package Alerts.AlertGenerators;
 
+import com.alerts.Alert;
 import com.alerts.HypotensiveHypoxemiaAlert.HypotensiveHypoxemiaAlertGenerator;
-import com.alerts.alert_outputs.AlertOutputStrategy;
-import com.alerts.alert_outputs.ConsoleAlertOutputStrategy;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;
 import org.junit.jupiter.api.Test;
@@ -13,12 +12,15 @@ public class HypotensiveHypoxemiaAlertGeneratorTest {
     @Test
     void testAlertGeneratorConditionsMet() {
         Patient patient = new Patient(1);
-        patient.addRecord(89, "SystolicPressure", System.currentTimeMillis());
-        patient.addRecord(91, "BloodSaturation", System.currentTimeMillis());
+        long currentTime = System.currentTimeMillis();
+        patient.addRecord(89, "SystolicPressure", currentTime);
+        patient.addRecord(91, "BloodSaturation", currentTime);
 
         List<PatientRecord> records = patient.getRecords(0, System.currentTimeMillis());
-        AlertOutputStrategy outputStrategy = new ConsoleAlertOutputStrategy();
-        HypotensiveHypoxemiaAlertGenerator generator = new HypotensiveHypoxemiaAlertGenerator(outputStrategy);
-        generator.evaluateData(patient, records);
+        HypotensiveHypoxemiaAlertGenerator generator = new HypotensiveHypoxemiaAlertGenerator();
+        Alert alert = generator.evaluateData(patient, records);
+        assert Integer.parseInt(alert.getPatientId()) == patient.getPatientId();
+        assert alert.getCondition().equals("Low Systolic Pressure and Blood Saturation, Hypotensive Hypoxemia Alert");
+        assert alert.getTimestamp() <= System.currentTimeMillis();
     }
 }

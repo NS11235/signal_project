@@ -1,7 +1,7 @@
 package com.alerts.HypotensiveHypoxemiaAlert;
 
 import com.alerts.Alert;
-import com.alerts.alert_outputs.AlertOutputStrategy;
+import com.alerts.NoAlert;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;
 
@@ -9,13 +9,7 @@ import java.util.List;
 
 public class HypotensiveHypoxemiaAlertGenerator {
 
-    private final AlertOutputStrategy outputStrategy;
-
-    public HypotensiveHypoxemiaAlertGenerator(AlertOutputStrategy outputStrategy) {
-        this.outputStrategy = outputStrategy;
-    }
-
-    public void evaluateData(Patient patient, List<PatientRecord> records) {
+    public Alert evaluateData(Patient patient, List<PatientRecord> records) {
         PatientRecord latestSystolic = null;
         PatientRecord latestSaturation = null;
 
@@ -30,7 +24,7 @@ public class HypotensiveHypoxemiaAlertGenerator {
 
         // Patient could have no systolic or saturation alerts, making this alert impossible
         if (latestSystolic == null || latestSaturation == null) {
-            return;
+            return new NoAlert();
         }
 
         // Calculates time difference for alerts to tripper Hypotensive Hypoxemia alert
@@ -41,15 +35,13 @@ public class HypotensiveHypoxemiaAlertGenerator {
         if (timeDiff < tenMinutes
                 && latestSystolic.getMeasurementValue() < 90
                 && latestSaturation.getMeasurementValue() < 92) {
-            triggerAlert(new HypotensiveHypoxemiaAlert(
+            return new HypotensiveHypoxemiaAlert(
                     String.valueOf(patient.getPatientId()),
                     "Low Systolic Pressure and Blood Saturation, Hypotensive Hypoxemia Alert",
                     System.currentTimeMillis()
-            ));
+            );
         }
-    }
 
-    private void triggerAlert(Alert alert) {
-        outputStrategy.output(alert);
+        return new NoAlert();
     }
 }

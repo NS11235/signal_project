@@ -5,6 +5,7 @@ import com.alerts.BloodSaturationAlert.BloodSaturationAlert;
 import com.alerts.BloodSaturationAlert.BloodSaturationAlertGenerator;
 import com.alerts.ECGAlert.ECGAlert;
 import com.alerts.ECGAlert.ECGAlertGenerator;
+import com.alerts.HypotensiveHypoxemiaAlert.HypotensiveHypoxemiaAlert;
 import com.alerts.HypotensiveHypoxemiaAlert.HypotensiveHypoxemiaAlertGenerator;
 import com.alerts.alert_outputs.AlertOutputStrategy;
 import com.alerts.alert_outputs.ConsoleAlertOutputStrategy;
@@ -74,8 +75,11 @@ public class AlertGenerator {
             }
         }
         if (hasBloodPressureRecords && hasBloodSaturationRecords) {
-            HypotensiveHypoxemiaAlertGenerator hypotensiveHypoxemiaAlertGenerator = new HypotensiveHypoxemiaAlertGenerator(outputStrategy);
-            hypotensiveHypoxemiaAlertGenerator.evaluateData(patient, records);
+            HypotensiveHypoxemiaAlertGenerator hypotensiveHypoxemiaAlertGenerator = new HypotensiveHypoxemiaAlertGenerator();
+            Alert alert = hypotensiveHypoxemiaAlertGenerator.evaluateData(patient, records);
+            if (alert instanceof HypotensiveHypoxemiaAlert) {
+                outputStrategy.output(alert);
+            }
         }
         if (hasECGRecords) {
             ECGAlertGenerator ecgAlertGenerator = new ECGAlertGenerator();
