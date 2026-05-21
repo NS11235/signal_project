@@ -1,6 +1,6 @@
 package com.alerts.alert_outputs;
 
-import com.alerts.Alert;
+import com.alerts.alert_types.Alert;
 
 public class ConsoleAlertOutputStrategy implements AlertOutputStrategy{
     @Override

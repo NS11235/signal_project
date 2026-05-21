@@ -1,7 +1,7 @@
 package Alerts.AlertGenerators;
 
-import com.alerts.Alert;
-import com.alerts.HypotensiveHypoxemiaAlert.HypotensiveHypoxemiaAlertGenerator;
+import com.alerts.alert_types.Alert;
+import com.alerts.alert_types.alert_generators.HypotensiveHypoxemiaAlertGenerator;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;
 import org.junit.jupiter.api.Test;

@@ -1,16 +1,13 @@
-package com.alerts;
+package com.alerts.alert_types.alert_generators;
 
-import com.alerts.BloodPressureAlert.BloodPressureAlertGenerator;
-import com.alerts.BloodSaturationAlert.BloodSaturationAlertGenerator;
-import com.alerts.ECGAlert.ECGAlertGenerator;
-import com.alerts.HypotensiveHypoxemiaAlert.HypotensiveHypoxemiaAlertGenerator;
+import com.alerts.alert_types.Alert;
 import com.alerts.alert_outputs.AlertOutputStrategy;
 import com.alerts.alert_outputs.ConsoleAlertOutputStrategy;
+import com.alerts.alert_types.NoAlert;
 import com.data_management.DataStorage;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 

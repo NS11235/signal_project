@@ -1,6 +1,4 @@
-package com.alerts.HypotensiveHypoxemiaAlert;
-
-import com.alerts.Alert;
+package com.alerts.alert_types;
 
 public class HypotensiveHypoxemiaAlert implements Alert {
     private final String patientId;

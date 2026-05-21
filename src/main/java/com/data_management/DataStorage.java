@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import com.alerts.AlertGenerator;
+import com.alerts.alert_types.alert_generators.AlertGenerator;
 import com.data_management.file_reading.DataReader;
 import com.data_management.file_reading.FileParser;
 

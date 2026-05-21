@@ -1,6 +1,4 @@
-package com.alerts.BloodSaturationAlert;
-
-import com.alerts.Alert;
+package com.alerts.alert_types;
 
 public class BloodSaturationAlert implements Alert {
 

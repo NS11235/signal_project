@@ -1,4 +1,4 @@
-package com.alerts;
+package com.alerts.alert_types;
 
 public class NoAlert implements Alert {
     private final String patientId;

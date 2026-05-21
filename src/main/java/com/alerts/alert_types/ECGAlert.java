@@ -1,6 +1,4 @@
-package com.alerts.ECGAlert;
-
-import com.alerts.Alert;
+package com.alerts.alert_types;
 
 public class ECGAlert implements Alert {
     private final String patientId;

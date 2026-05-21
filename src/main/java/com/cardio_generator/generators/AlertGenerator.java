@@ -2,7 +2,6 @@ package com.cardio_generator.generators;
 
 import java.util.Random;
 
-import com.alerts.AlertClassic;
 import com.cardio_generator.outputs.OutputStrategy;
 import com.data_management.DataStorage;
 

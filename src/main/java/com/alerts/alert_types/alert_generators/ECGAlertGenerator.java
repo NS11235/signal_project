@@ -1,8 +1,8 @@
-package com.alerts.ECGAlert;
+package com.alerts.alert_types.alert_generators;
 
-import com.alerts.Alert;
-import com.alerts.AlertGeneratorStrategy;
-import com.alerts.NoAlert;
+import com.alerts.alert_types.Alert;
+import com.alerts.alert_types.ECGAlert;
+import com.alerts.alert_types.NoAlert;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;
 import java.util.List;

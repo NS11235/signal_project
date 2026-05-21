@@ -1,6 +1,4 @@
-package com.alerts.BloodPressureAlert;
-
-import com.alerts.Alert;
+package com.alerts.alert_types;
 
 public class BloodPressureAlert implements Alert {
 
