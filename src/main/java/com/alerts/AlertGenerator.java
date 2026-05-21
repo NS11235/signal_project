@@ -1,6 +1,7 @@
 package com.alerts;
 
 import com.alerts.BloodPressureAlert.BloodPressureAlertGenerator;
+import com.alerts.BloodSaturationAlert.BloodSaturationAlert;
 import com.alerts.BloodSaturationAlert.BloodSaturationAlertGenerator;
 import com.alerts.ECGAlert.ECGAlert;
 import com.alerts.ECGAlert.ECGAlertGenerator;
@@ -66,8 +67,11 @@ public class AlertGenerator {
             bloodPressureAlertGenerator.evaluateData(patient, records);
         }
         if (hasBloodSaturationRecords) {
-            BloodSaturationAlertGenerator bloodSaturationAlertGenerator = new BloodSaturationAlertGenerator(outputStrategy);
-            bloodSaturationAlertGenerator.evaluateData(patient, records);
+            BloodSaturationAlertGenerator bloodSaturationAlertGenerator = new BloodSaturationAlertGenerator();
+            Alert alert = bloodSaturationAlertGenerator.evaluateData(patient, records);
+            if (alert instanceof BloodSaturationAlert) {
+                outputStrategy.output(alert);
+            }
         }
         if (hasBloodPressureRecords && hasBloodSaturationRecords) {
             HypotensiveHypoxemiaAlertGenerator hypotensiveHypoxemiaAlertGenerator = new HypotensiveHypoxemiaAlertGenerator(outputStrategy);

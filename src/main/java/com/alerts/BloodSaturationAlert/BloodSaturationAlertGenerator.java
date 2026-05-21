@@ -1,7 +1,7 @@
 package com.alerts.BloodSaturationAlert;
 
 import com.alerts.Alert;
-import com.alerts.alert_outputs.AlertOutputStrategy;
+import com.alerts.NoAlert;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;
 
@@ -10,53 +10,51 @@ import java.util.List;
 
 public class BloodSaturationAlertGenerator {
 
-    private final AlertOutputStrategy outputStrategy;
-
-    public BloodSaturationAlertGenerator(AlertOutputStrategy outputStrategy) {
-        this.outputStrategy = outputStrategy;
-    }
-
-    public void evaluateData(Patient patient, List<PatientRecord> records) {
+    public Alert evaluateData(Patient patient, List<PatientRecord> records) {
         List<PatientRecord> saturationRecords = new ArrayList<>();
         for (PatientRecord record : records) {
             if (record.getRecordType().equals("BloodSaturation")) {
                 saturationRecords.add(record);
             }
         }
-        checkSaturation(patient, saturationRecords);
+        return checkSaturation(patient, saturationRecords);
     }
 
-    private void checkSaturation(Patient patient, List<PatientRecord> records) {
+    private Alert checkSaturation(Patient patient, List<PatientRecord> records) {
         if  (records.isEmpty()) {
-            return;
+            return new NoAlert();
         }
 
         double latestSaturation = records.get(records.size() - 1).getMeasurementValue();
         if (latestSaturation < 92) {
-            triggerAlert(new BloodSaturationAlert(patient.getPatientId(), "Low Saturation", System.currentTimeMillis(), latestSaturation));
+            return new BloodSaturationAlert(patient.getPatientId(),
+                    "Low Saturation",
+                    System.currentTimeMillis(),
+                    latestSaturation);
         }
 
         double tenMinutes = 10 * 60 * 1000L;
         for (int i = 0; i < records.size(); i++) {
-            for (int j = 0; j < records.size(); j++) {
+            for (PatientRecord record : records) {
                 double firstTime = records.get(i).getTimestamp();
-                double secondTime = records.get(j).getTimestamp();
+                double secondTime = record.getTimestamp();
                 double timeDifference = secondTime - firstTime;
                 if (timeDifference > tenMinutes) {
                     break;
                 }
                 double firstValue = records.get(i).getMeasurementValue();
-                double secondValue = records.get(j).getMeasurementValue();
+                double secondValue = record.getMeasurementValue();
                 double dropValue = firstValue - secondValue;
                 if (dropValue >= 5) {
-                    triggerAlert(new BloodSaturationAlert(patient.getPatientId(), "Rapid Saturation Drop", System.currentTimeMillis(), firstValue));
-                    return;
+                    return new BloodSaturationAlert(
+                            patient.getPatientId(),
+                            "Rapid Saturation Drop",
+                            System.currentTimeMillis(),
+                            firstValue);
                 }
             }
         }
-    }
 
-    private void triggerAlert(Alert alert) {
-        outputStrategy.output(alert);
+        return new NoAlert();
     }
 }
