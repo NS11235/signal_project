@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.alerts.alert_outputs.AlertOutput;
+import com.alerts.alert_outputs.ConsoleAlertOutputStrategy;
+import com.alerts.alert_types.Alert;
 import com.alerts.alert_types.alert_generators.AlertGenerator;
 import com.data_management.file_reading.DataReader;
 import com.data_management.file_reading.FileParser;
@@ -117,8 +121,10 @@ public class DataStorage {
         AlertGenerator alertGenerator = new AlertGenerator(storage);
 
         // Evaluate all patients' data to check for conditions that may trigger alerts
+        AlertOutput output = new AlertOutput(new ConsoleAlertOutputStrategy());
         for (Patient patient : storage.getAllPatients()) {
-            alertGenerator.evaluateData(patient);
+            List<Alert> alerts = alertGenerator.generateAlerts(patient);
+            output.outputAlerts(alerts);
         }
     }
 }
