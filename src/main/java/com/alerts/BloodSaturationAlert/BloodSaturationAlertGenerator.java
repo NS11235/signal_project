@@ -4,20 +4,12 @@ import com.alerts.Alert;
 import com.alerts.NoAlert;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class BloodSaturationAlertGenerator {
 
     public Alert evaluateData(Patient patient, List<PatientRecord> records) {
-        List<PatientRecord> saturationRecords = new ArrayList<>();
-        for (PatientRecord record : records) {
-            if (record.getRecordType().equals("BloodSaturation")) {
-                saturationRecords.add(record);
-            }
-        }
-        return checkSaturation(patient, saturationRecords);
+        return checkSaturation(patient, records);
     }
 
     private Alert checkSaturation(Patient patient, List<PatientRecord> records) {

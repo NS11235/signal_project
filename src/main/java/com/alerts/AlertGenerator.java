@@ -13,6 +13,8 @@ import com.data_management.DataStorage;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;
 
+import javax.swing.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -48,40 +50,42 @@ public class AlertGenerator {
     public void evaluateData(Patient patient) {
         List<PatientRecord> records = dataStorage.getRecords(patient.getPatientId(), 0, Long.MAX_VALUE);
 
-        boolean hasBloodPressureRecords = false;
-        boolean hasBloodSaturationRecords = false;
-        boolean hasECGRecords = false;
+        List<PatientRecord> bloodPressureRecords = new ArrayList<>();
+        List<PatientRecord> bloodSaturationRecords = new ArrayList<>();
+        List<PatientRecord> ecgRecords = new ArrayList<>();
 
         for  (PatientRecord record : records) {
             if (record.getRecordType().contains("SystolicPressure") || record.getRecordType().contains("DiastolicPressure")) {
-                hasBloodPressureRecords = true;
+                bloodPressureRecords.add(record);
+                continue;
             }
             if (record.getRecordType().contains("BloodSaturation")) {
-                hasBloodSaturationRecords = true;
+                bloodSaturationRecords.add(record);
+                continue;
             }
             if (record.getRecordType().contains("ECG")) {
-                hasECGRecords = true;
+                ecgRecords.add(record);
             }
         }
-        if (hasBloodPressureRecords) {
+        if (!bloodSaturationRecords.isEmpty()) {
             BloodPressureAlertGenerator bloodPressureAlertGenerator = new BloodPressureAlertGenerator(outputStrategy);
             bloodPressureAlertGenerator.evaluateData(patient, records);
         }
-        if (hasBloodSaturationRecords) {
+        if (!bloodPressureRecords.isEmpty()) {
             BloodSaturationAlertGenerator bloodSaturationAlertGenerator = new BloodSaturationAlertGenerator();
             Alert alert = bloodSaturationAlertGenerator.evaluateData(patient, records);
             if (alert instanceof BloodSaturationAlert) {
                 outputStrategy.output(alert);
             }
         }
-        if (hasBloodPressureRecords && hasBloodSaturationRecords) {
+        if (!bloodSaturationRecords.isEmpty() && bloodPressureRecords.isEmpty()) {
             HypotensiveHypoxemiaAlertGenerator hypotensiveHypoxemiaAlertGenerator = new HypotensiveHypoxemiaAlertGenerator();
             Alert alert = hypotensiveHypoxemiaAlertGenerator.evaluateData(patient, records);
             if (alert instanceof HypotensiveHypoxemiaAlert) {
                 outputStrategy.output(alert);
             }
         }
-        if (hasECGRecords) {
+        if (!ecgRecords.isEmpty()) {
             ECGAlertGenerator ecgAlertGenerator = new ECGAlertGenerator();
             Alert alert = ecgAlertGenerator.evaluateData(patient, records);
             if (alert instanceof ECGAlert) {
