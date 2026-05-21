@@ -2,6 +2,7 @@ package com.alerts;
 
 import com.alerts.BloodPressureAlert.BloodPressureAlertGenerator;
 import com.alerts.BloodSaturationAlert.BloodSaturationAlertGenerator;
+import com.alerts.ECGAlert.ECGAlertGenerator;
 import com.alerts.HypotensiveHypoxemiaAlert.HypotensiveHypoxemiaAlertGenerator;
 import com.alerts.alert_outputs.AlertOutputStrategy;
 import com.alerts.alert_outputs.ConsoleAlertOutputStrategy;
@@ -46,6 +47,7 @@ public class AlertGenerator {
 
         boolean hasBloodPressureRecords = false;
         boolean hasBloodSaturationRecords = false;
+        boolean hasECGRecords = false;
 
         for  (PatientRecord record : records) {
             if (record.getRecordType().contains("SystolicPressure") || record.getRecordType().contains("DiastolicPressure")) {
@@ -53,6 +55,9 @@ public class AlertGenerator {
             }
             if (record.getRecordType().contains("BloodSaturation")) {
                 hasBloodSaturationRecords = true;
+            }
+            if (record.getRecordType().contains("ECG")) {
+                hasECGRecords = true;
             }
         }
         if (hasBloodPressureRecords) {
@@ -66,6 +71,10 @@ public class AlertGenerator {
         if (hasBloodPressureRecords && hasBloodSaturationRecords) {
             HypotensiveHypoxemiaAlertGenerator hypotensiveHypoxemiaAlertGenerator = new HypotensiveHypoxemiaAlertGenerator(outputStrategy);
             hypotensiveHypoxemiaAlertGenerator.evaluateData(patient, records);
+        }
+        if (hasECGRecords) {
+            ECGAlertGenerator ecgAlertGenerator = new ECGAlertGenerator(outputStrategy);
+            ecgAlertGenerator.evaluateData(patient, records);
         }
     }
 }
