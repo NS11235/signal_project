@@ -1,12 +1,13 @@
 package com.alerts.BloodSaturationAlert;
 
 import com.alerts.Alert;
+import com.alerts.AlertGeneratorStrategy;
 import com.alerts.NoAlert;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;
 import java.util.List;
 
-public class BloodSaturationAlertGenerator {
+public class BloodSaturationAlertGenerator implements AlertGeneratorStrategy {
 
     public Alert evaluateData(Patient patient, List<PatientRecord> records) {
         return checkSaturation(patient, records);

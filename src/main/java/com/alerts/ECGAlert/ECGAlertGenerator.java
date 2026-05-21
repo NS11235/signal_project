@@ -1,12 +1,13 @@
 package com.alerts.ECGAlert;
 
 import com.alerts.Alert;
+import com.alerts.AlertGeneratorStrategy;
 import com.alerts.NoAlert;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;
 import java.util.List;
 
-public class ECGAlertGenerator {
+public class ECGAlertGenerator implements AlertGeneratorStrategy {
     private static final int SLIDING_WINDOW_SIZE = 10;
     private static final double OUTLIER_PEAK_SIZE = 2.0;
 

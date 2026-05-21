@@ -1,13 +1,14 @@
 package com.alerts.HypotensiveHypoxemiaAlert;
 
 import com.alerts.Alert;
+import com.alerts.AlertGeneratorStrategy;
 import com.alerts.NoAlert;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;
 
 import java.util.List;
 
-public class HypotensiveHypoxemiaAlertGenerator {
+public class HypotensiveHypoxemiaAlertGenerator implements AlertGeneratorStrategy {
 
     public Alert evaluateData(Patient patient, List<PatientRecord> records) {
         PatientRecord latestSystolic = null;

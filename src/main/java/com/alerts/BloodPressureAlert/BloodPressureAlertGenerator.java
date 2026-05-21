@@ -1,22 +1,17 @@
 package com.alerts.BloodPressureAlert;
 
 import com.alerts.Alert;
-import com.alerts.alert_outputs.AlertOutputStrategy;
+import com.alerts.AlertGeneratorStrategy;
+import com.alerts.NoAlert;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BloodPressureAlertGenerator {
+public class BloodPressureAlertGenerator implements AlertGeneratorStrategy {
 
-    private final AlertOutputStrategy outputStrategy;
-
-    public BloodPressureAlertGenerator(AlertOutputStrategy outputStrategy) {
-        this.outputStrategy = outputStrategy;
-    }
-
-    public void evaluateData(Patient patient, List<PatientRecord> records) {
+    public Alert evaluateData(Patient patient, List<PatientRecord> records) {
         List<PatientRecord> systolicRecords = new ArrayList<>();
         List<PatientRecord> diastolicRecords = new ArrayList<>();
         for  (PatientRecord record : records) {
@@ -33,20 +28,32 @@ public class BloodPressureAlertGenerator {
         if (!systolicRecords.isEmpty()) {
             double latestSystolic = systolicRecords.get(systolicRecords.size() - 1).getMeasurementValue();
             if (latestSystolic > 180 || latestSystolic < 90) {
-                triggerAlert(new BloodPressureAlert(patient.getPatientId(), "Systolic Critical Threshold", System.currentTimeMillis(), latestSystolic));
+                return new BloodPressureAlert(
+                        patient.getPatientId(),
+                        "Systolic Critical Threshold",
+                        System.currentTimeMillis(),
+                        latestSystolic);
             }
         }
         if (!diastolicRecords.isEmpty()) {
             double latestDiastolic =  diastolicRecords.get(diastolicRecords.size() - 1).getMeasurementValue();
             if (latestDiastolic > 120 || latestDiastolic < 60) {
-                triggerAlert(new BloodPressureAlert(patient.getPatientId(), "Diastolic Critical Threshold", System.currentTimeMillis(), latestDiastolic));
+                return new BloodPressureAlert(
+                        patient.getPatientId(),
+                        "Diastolic Critical Threshold",
+                        System.currentTimeMillis(),
+                        latestDiastolic);
             }
         }
+
+        return new NoAlert();
     }
 
-    private void checkTrend(Patient patient, List<PatientRecord> records, String type) {
+
+    // TODO: Split into separate alert type
+    private Alert checkTrend(Patient patient, List<PatientRecord> records, String type) {
         if (records.size() < 3) {
-            return;
+            return new NoAlert();
         }
 
         double firstMeasure = records.get(records.size()-  3).getMeasurementValue();
@@ -58,15 +65,21 @@ public class BloodPressureAlertGenerator {
 
         if (isIncreasing) {
             String condition = type + " Trend Increasing";
-            triggerAlert(new BloodPressureAlert(patient.getPatientId(), condition, System.currentTimeMillis(), thirdMeasure));
+            return new BloodPressureAlert(
+                    patient.getPatientId(),
+                    condition,
+                    System.currentTimeMillis(),
+                    thirdMeasure);
         } else if (isDecreasing) {
             String condition = type + " Trend Decreasing";
-            triggerAlert(new BloodPressureAlert(patient.getPatientId(), condition, System.currentTimeMillis(), thirdMeasure));
+            return new BloodPressureAlert(
+                    patient.getPatientId(),
+                    condition,
+                    System.currentTimeMillis(),
+                    thirdMeasure);
         }
 
-    }
 
-    private void triggerAlert(Alert alert) {
-        outputStrategy.output(alert);
+        return new NoAlert();
     }
 }

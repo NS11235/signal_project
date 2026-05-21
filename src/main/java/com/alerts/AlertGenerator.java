@@ -1,11 +1,8 @@
 package com.alerts;
 
 import com.alerts.BloodPressureAlert.BloodPressureAlertGenerator;
-import com.alerts.BloodSaturationAlert.BloodSaturationAlert;
 import com.alerts.BloodSaturationAlert.BloodSaturationAlertGenerator;
-import com.alerts.ECGAlert.ECGAlert;
 import com.alerts.ECGAlert.ECGAlertGenerator;
-import com.alerts.HypotensiveHypoxemiaAlert.HypotensiveHypoxemiaAlert;
 import com.alerts.HypotensiveHypoxemiaAlert.HypotensiveHypoxemiaAlertGenerator;
 import com.alerts.alert_outputs.AlertOutputStrategy;
 import com.alerts.alert_outputs.ConsoleAlertOutputStrategy;
@@ -27,6 +24,7 @@ public class AlertGenerator {
     
     private final DataStorage dataStorage;
     private final AlertOutputStrategy outputStrategy;
+    private final List<AlertGeneratorStrategy> alertStrategies;
 
     /**
      * Constructs an {@code AlertGenerator} with a specified {@code DataStorage}.
@@ -38,6 +36,19 @@ public class AlertGenerator {
     public AlertGenerator(DataStorage dataStorage) {
         this.dataStorage = dataStorage;
         this.outputStrategy = new ConsoleAlertOutputStrategy();
+        this.alertStrategies = getStrategies();
+    }
+
+
+    private List<AlertGeneratorStrategy> getStrategies() {
+        List<AlertGeneratorStrategy> strategies = new ArrayList<>();
+
+        strategies.add(new BloodPressureAlertGenerator());
+        strategies.add(new BloodSaturationAlertGenerator());
+        strategies.add(new HypotensiveHypoxemiaAlertGenerator());
+        strategies.add(new ECGAlertGenerator());
+
+        return strategies;
     }
 
     /**
@@ -50,45 +61,9 @@ public class AlertGenerator {
     public void evaluateData(Patient patient) {
         List<PatientRecord> records = dataStorage.getRecords(patient.getPatientId(), 0, Long.MAX_VALUE);
 
-        List<PatientRecord> bloodPressureRecords = new ArrayList<>();
-        List<PatientRecord> bloodSaturationRecords = new ArrayList<>();
-        List<PatientRecord> ecgRecords = new ArrayList<>();
-
-        for  (PatientRecord record : records) {
-            if (record.getRecordType().contains("SystolicPressure") || record.getRecordType().contains("DiastolicPressure")) {
-                bloodPressureRecords.add(record);
-                continue;
-            }
-            if (record.getRecordType().contains("BloodSaturation")) {
-                bloodSaturationRecords.add(record);
-                continue;
-            }
-            if (record.getRecordType().contains("ECG")) {
-                ecgRecords.add(record);
-            }
-        }
-        if (!bloodSaturationRecords.isEmpty()) {
-            BloodPressureAlertGenerator bloodPressureAlertGenerator = new BloodPressureAlertGenerator(outputStrategy);
-            bloodPressureAlertGenerator.evaluateData(patient, records);
-        }
-        if (!bloodPressureRecords.isEmpty()) {
-            BloodSaturationAlertGenerator bloodSaturationAlertGenerator = new BloodSaturationAlertGenerator();
-            Alert alert = bloodSaturationAlertGenerator.evaluateData(patient, records);
-            if (alert instanceof BloodSaturationAlert) {
-                outputStrategy.output(alert);
-            }
-        }
-        if (!bloodSaturationRecords.isEmpty() && bloodPressureRecords.isEmpty()) {
-            HypotensiveHypoxemiaAlertGenerator hypotensiveHypoxemiaAlertGenerator = new HypotensiveHypoxemiaAlertGenerator();
-            Alert alert = hypotensiveHypoxemiaAlertGenerator.evaluateData(patient, records);
-            if (alert instanceof HypotensiveHypoxemiaAlert) {
-                outputStrategy.output(alert);
-            }
-        }
-        if (!ecgRecords.isEmpty()) {
-            ECGAlertGenerator ecgAlertGenerator = new ECGAlertGenerator();
-            Alert alert = ecgAlertGenerator.evaluateData(patient, records);
-            if (alert instanceof ECGAlert) {
+        for (AlertGeneratorStrategy strategy : alertStrategies) {
+            Alert alert = strategy.evaluateData(patient, records);
+            if (!(alert instanceof NoAlert)) {
                 outputStrategy.output(alert);
             }
         }
