@@ -1,28 +1,9 @@
 package com.alerts.alert_types;
 
-public class HypotensiveHypoxemiaAlert implements Alert {
-    private final String patientId;
-    private final String condition;
-    private final long timestamp;
+public class HypotensiveHypoxemiaAlert extends AlertClassic implements Alert {
 
-    public HypotensiveHypoxemiaAlert(String patientId, String condition, long timestamp) {
-        this.patientId = patientId;
-        this.condition = condition;
-        this.timestamp = timestamp;
+    public HypotensiveHypoxemiaAlert(int patientId, String condition, long timestamp) {
+        super(patientId, condition, timestamp);
     }
 
-    @Override
-    public String getPatientId() {
-        return patientId;
-    }
-
-    @Override
-    public String getCondition() {
-        return condition;
-    }
-
-    @Override
-    public long getTimestamp() {
-        return timestamp;
-    }
 }

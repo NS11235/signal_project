@@ -19,7 +19,7 @@ public class HypotensiveHypoxemiaAlertGeneratorTest {
         List<PatientRecord> records = patient.getRecords(0, System.currentTimeMillis());
         HypotensiveHypoxemiaAlertGenerator generator = new HypotensiveHypoxemiaAlertGenerator();
         Alert alert = generator.evaluateData(patient, records);
-        assert Integer.parseInt(alert.getPatientId()) == patient.getPatientId();
+        assert alert.getPatientId() == patient.getPatientId();
         assert alert.getCondition().equals("Low Systolic Pressure and Blood Saturation, Hypotensive Hypoxemia Alert");
         assert alert.getTimestamp() <= System.currentTimeMillis();
     }
@@ -34,7 +34,7 @@ public class HypotensiveHypoxemiaAlertGeneratorTest {
         List<PatientRecord> records = patient.getRecords(0, System.currentTimeMillis());
         HypotensiveHypoxemiaAlertGenerator generator = new HypotensiveHypoxemiaAlertGenerator();
         Alert alert = generator.evaluateData(patient, records);
-        assert Integer.parseInt(alert.getPatientId()) == 0;
+        assert alert.getPatientId() == 0;
         assert alert.getCondition().equals("no condition");
         assert alert.getTimestamp() <= System.currentTimeMillis();
     }
@@ -49,7 +49,7 @@ public class HypotensiveHypoxemiaAlertGeneratorTest {
         List<PatientRecord> records = patient.getRecords(0, System.currentTimeMillis());
         HypotensiveHypoxemiaAlertGenerator generator = new HypotensiveHypoxemiaAlertGenerator();
         Alert alert = generator.evaluateData(patient, records);
-        assert Integer.parseInt(alert.getPatientId()) == 0;
+        assert alert.getPatientId() == 0;
         assert alert.getCondition().equals("no condition");
         assert alert.getTimestamp() <= System.currentTimeMillis();
     }
@@ -64,7 +64,7 @@ public class HypotensiveHypoxemiaAlertGeneratorTest {
         List<PatientRecord> records = patient.getRecords(0, System.currentTimeMillis());
         HypotensiveHypoxemiaAlertGenerator generator = new HypotensiveHypoxemiaAlertGenerator();
         Alert alert = generator.evaluateData(patient, records);
-        assert Integer.parseInt(alert.getPatientId()) == 0;
+        assert alert.getPatientId() == 0;
         assert alert.getCondition().equals("no condition");
         assert alert.getTimestamp() <= System.currentTimeMillis();
     }

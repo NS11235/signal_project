@@ -23,7 +23,7 @@ public class ECGAlertGenerator implements AlertGeneratorStrategy {
 
         if (average > 0 && Math.abs(previousIndex) > OUTLIER_PEAK_SIZE * average) {
             return new ECGAlert(
-                    String.valueOf(patient.getPatientId()),
+                    patient.getPatientId(),
                     "Abnormal ECG Peak",
                     records.get(previousIndex).getTimestamp()
             );

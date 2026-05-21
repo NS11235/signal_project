@@ -37,7 +37,7 @@ public class HypotensiveHypoxemiaAlertGenerator implements AlertGeneratorStrateg
                 && latestSystolic.getMeasurementValue() < 90
                 && latestSaturation.getMeasurementValue() < 92) {
             return new HypotensiveHypoxemiaAlert(
-                    String.valueOf(patient.getPatientId()),
+                    patient.getPatientId(),
                     "Low Systolic Pressure and Blood Saturation, Hypotensive Hypoxemia Alert",
                     System.currentTimeMillis()
             );

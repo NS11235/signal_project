@@ -2,17 +2,17 @@ package com.alerts.alert_types;
 
 // Represents an alert
 public class AlertClassic implements Alert {
-    private String patientId;
+    private int patientId;
     private String condition;
     private long timestamp;
 
-    public AlertClassic(String patientId, String condition, long timestamp) {
+    public AlertClassic(int patientId, String condition, long timestamp) {
         this.patientId = patientId;
         this.condition = condition;
         this.timestamp = timestamp;
     }
 
-    public String getPatientId() {
+    public int getPatientId() {
         return patientId;
     }
 

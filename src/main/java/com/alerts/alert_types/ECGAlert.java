@@ -1,23 +1,9 @@
 package com.alerts.alert_types;
 
-public class ECGAlert implements Alert {
-    private final String patientId;
-    private final String condition;
-    private final long timestamp;
+public class ECGAlert extends AlertClassic implements Alert {
 
-    public ECGAlert(String patientId, String condition, long timestamp) {
-        this.patientId = patientId;
-        this.condition = condition;
-        this.timestamp = timestamp;
-    }
 
-    @Override public String getPatientId() {
-        return patientId;
-    }
-    @Override public String getCondition() {
-        return condition;
-    }
-    @Override public long getTimestamp() {
-        return timestamp;
+    public ECGAlert(int patientId, String condition, long timestamp) {
+        super(patientId, condition, timestamp);
     }
 }

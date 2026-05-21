@@ -1,7 +1,7 @@
 package com.alerts.alert_types;
 
 public interface Alert {
-    String getPatientId();
+    int getPatientId();
     String getCondition();
     long getTimestamp();
 }

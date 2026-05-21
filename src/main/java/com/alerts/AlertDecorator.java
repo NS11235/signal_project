@@ -10,7 +10,7 @@ public abstract class AlertDecorator implements Alert {
     }
 
     @Override
-    public String getPatientId() 
+    public int getPatientId()
     {
         return decoratedAlert.getPatientId(); 
     }
