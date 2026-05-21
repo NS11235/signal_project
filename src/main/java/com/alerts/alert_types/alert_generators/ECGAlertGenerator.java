@@ -12,7 +12,6 @@ public class ECGAlertGenerator implements AlertGeneratorStrategy {
     private static final double OUTLIER_PEAK_SIZE = 2.0;
 
     public Alert evaluateData(Patient patient, List<PatientRecord> records) {
-        // Checking that we have enough data
         if (records.size() < SLIDING_WINDOW_SIZE) {
             return new NoAlert();
         }
