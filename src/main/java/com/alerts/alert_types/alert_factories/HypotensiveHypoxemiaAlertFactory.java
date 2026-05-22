@@ -1,0 +1,12 @@
+package com.alerts.alert_types.alert_factories;
+
+import com.alerts.alert_types.AlertClassic;
+import com.alerts.alert_types.HypotensiveHypoxemiaAlert;
+
+public class HypotensiveHypoxemiaAlertFactory extends AlertFactory {
+    @Override
+    public AlertClassic createAlert(int patientId, String condition, long timestamp,double value)
+    {
+        return new HypotensiveHypoxemiaAlert(patientId, "Hypoxemia: " + condition, timestamp);
+    }
+}
