@@ -1,15 +1,28 @@
 package com.alerts.alert_types.alert_generators;
 
 import com.alerts.alert_types.Alert;
-import com.alerts.alert_types.HypotensiveHypoxemiaAlert;
 import com.alerts.alert_types.NoAlert;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;
 import com.alerts.alert_types.alert_factories.HypotensiveHypoxemiaAlertFactory;
 import java.util.List;
 
+/**
+ * Generates alerts related to hypotensive hypoxemia conditions.
+ * This class checks whether low systolic blood pressure and
+ * low blood oxygen saturation occur within a short period.
+ */
 public class HypotensiveHypoxemiaAlertGenerator implements AlertGeneratorStrategy {
 
+    /**
+     * Evaluates patient records and generates a hypotensive
+     * hypoxemia alert if conditions are met.
+     *
+     * @param patient the patient being evaluated
+     * @param records the patient records to evaluate
+     * @return an alert if conditions are met,
+     * otherwise a no-alert object
+     */
     public Alert evaluateData(Patient patient, List<PatientRecord> records) {
         HypotensiveHypoxemiaAlertFactory factory = new HypotensiveHypoxemiaAlertFactory();
         PatientRecord latestSystolic = null;

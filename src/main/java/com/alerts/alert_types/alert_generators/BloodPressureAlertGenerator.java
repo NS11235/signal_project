@@ -9,9 +9,19 @@ import com.alerts.alert_types.alert_factories.BloodPressureAlertFactory;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Generates alerts related to blood pressure measurements.
+ * This class checks for critical thresholds and measurement trends.
+ */
 public class BloodPressureAlertGenerator implements AlertGeneratorStrategy {
 
+    /**
+     * Evaluates blood pressure records and generates alerts if needed.
+     *
+     * @param patient the patient being evaluated
+     * @param records the patient records to evaluate
+     * @return an alert if conditions are met, otherwise a no-alert object
+     */
     public Alert evaluateData(Patient patient, List<PatientRecord> records) {
         List<PatientRecord> systolicRecords = new ArrayList<>();
         List<PatientRecord> diastolicRecords = new ArrayList<>();
@@ -58,8 +68,15 @@ public class BloodPressureAlertGenerator implements AlertGeneratorStrategy {
         return new NoAlert();
     }
 
-
-    // TODO: Split into separate alert type
+    /**
+     * Checks blood pressure records for increasing
+     * or decreasing trends.
+     *
+     * @param patient the patient being evaluated
+     * @param records the blood pressure records
+     * @param type the type of blood pressure measurement
+     * @return an alert if a trend is detected, otherwise a no-alert object
+     */
     private Alert checkTrend(Patient patient, List<PatientRecord> records, String type) {
         BloodPressureAlertFactory factory = new BloodPressureAlertFactory();
         if (records.size() < 3) {

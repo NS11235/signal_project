@@ -10,29 +10,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The {@code AlertGenerator} class is responsible for monitoring patient data
- * and generating alerts when certain predefined conditions are met. This class
- * relies on a {@link DataStorage} instance to access patient data and evaluate
- * it against specific health criteria.
+ * Generates alerts by evaluating patient data against
+ * a set of alert generation strategies.
  */
 public class AlertGenerator {
-    
+
     private final DataStorage dataStorage;
     private final List<AlertGeneratorStrategy> alertStrategies;
 
     /**
-     * Constructs an {@code AlertGenerator} with a specified {@code DataStorage}.
-     * The {@code DataStorage} is used to retrieve patient data that this class
-     * will monitor and evaluate.
+     * Creates an AlertGenerator with a data storage source.
      *
-     * @param dataStorage the data storage system that provides access to patient data
+     * @param dataStorage the data storage system containing patient records
      */
     public AlertGenerator(DataStorage dataStorage) {
         this.dataStorage = dataStorage;
         this.alertStrategies = getStrategies();
     }
 
-
+    /**
+     * Creates a list of alert generation strategies.
+     *
+     * @return a list of alert generation strategies
+     */
     private List<AlertGeneratorStrategy> getStrategies() {
         List<AlertGeneratorStrategy> strategies = new ArrayList<>();
 
@@ -45,14 +45,15 @@ public class AlertGenerator {
     }
 
     /**
-     * Evaluates the specified patient's data to determine if any alert conditions
-     * are met. If a condition is met, the respective Alert Generator will trigger
-     * an alert output.
+     * Generates alerts for a patient by evaluating patient records.
      *
-     * @param patient the patient data to evaluate for alert conditions
+     * @param patient the patient whose records are evaluated
+     * @return a list of generated alerts
      */
     public List<Alert> generateAlerts(Patient patient) {
-        List<PatientRecord> records = dataStorage.getRecords(patient.getPatientId(), 0, Long.MAX_VALUE);
+        List<PatientRecord> records = dataStorage.getRecords(
+                patient.getPatientId(), 0, Long.MAX_VALUE);
+
         List<Alert> alerts = new ArrayList<>();
 
         for (AlertGeneratorStrategy strategy : alertStrategies) {
