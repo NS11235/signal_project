@@ -1,7 +1,9 @@
 package com.alerts.alert_types;
 
 import com.alerts.AlertDecorator;
-
+/**
+ * Decorator for repeated alerts.
+ */
 public class RepeatedAlertDecorator extends AlertDecorator {
     private int ct;
 
