@@ -12,7 +12,7 @@ public class ECGAlertGenerator implements AlertGeneratorStrategy {
     private static final double OUTLIER_PEAK_SIZE = 2.0;
 
     public Alert evaluateData(Patient patient, List<PatientRecord> records) {
-        if (records.size() < SLIDING_WINDOW_SIZE) {
+        if (records.size() <= SLIDING_WINDOW_SIZE) {
             return new NoAlert();
         }
 
@@ -20,7 +20,7 @@ public class ECGAlertGenerator implements AlertGeneratorStrategy {
 
         double average = windowAverage(records, previousIndex);
 
-        if (average > 0 && Math.abs(previousIndex) > OUTLIER_PEAK_SIZE * average) {
+        if (average > 0 && Math.abs(records.get(previousIndex).getMeasurementValue()) > OUTLIER_PEAK_SIZE * average) {
             return new ECGAlert(
                     patient.getPatientId(),
                     "Abnormal ECG Peak",
