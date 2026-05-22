@@ -4,17 +4,24 @@ import org.java_websocket.WebSocket;
 import org.java_websocket.server.WebSocketServer;
 
 import java.net.InetSocketAddress;
-
+/**
+ * WebSocket-based OutputStrategy that broadcasts patient data to all those connected.
+ */
 public class WebSocketOutputStrategy implements OutputStrategy {
 
     private WebSocketServer server;
 
+    /**
+     * Starts a WebSocket server on the given port.
+     */
     public WebSocketOutputStrategy(int port) {
         server = new SimpleWebSocketServer(new InetSocketAddress(port));
         System.out.println("WebSocket server created on port: " + port + ", listening for connections...");
         server.start();
     }
-
+     /**
+     * Broadcasts patient data to all those connected.
+     */
     @Override
     public void output(int patientId, long timestamp, String label, String data) {
         String message = String.format("%d,%d,%s,%s", patientId, timestamp, label, data);
@@ -24,6 +31,9 @@ public class WebSocketOutputStrategy implements OutputStrategy {
         }
     }
 
+     /**
+     * Internal WebSocket server handling connections
+     */
     private static class SimpleWebSocketServer extends WebSocketServer {
 
         public SimpleWebSocketServer(InetSocketAddress address) {
