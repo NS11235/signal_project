@@ -5,12 +5,13 @@ import com.alerts.alert_types.HypotensiveHypoxemiaAlert;
 import com.alerts.alert_types.NoAlert;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;
-
+import com.alerts.alert_types.alert_factories.HypotensiveHypoxemiaAlertFactory;
 import java.util.List;
 
 public class HypotensiveHypoxemiaAlertGenerator implements AlertGeneratorStrategy {
 
     public Alert evaluateData(Patient patient, List<PatientRecord> records) {
+        HypotensiveHypoxemiaAlertFactory factory = new HypotensiveHypoxemiaAlertFactory();
         PatientRecord latestSystolic = null;
         PatientRecord latestSaturation = null;
 
@@ -36,10 +37,11 @@ public class HypotensiveHypoxemiaAlertGenerator implements AlertGeneratorStrateg
         if (timeDiff < tenMinutes
                 && latestSystolic.getMeasurementValue() < 90
                 && latestSaturation.getMeasurementValue() < 92) {
-            return new HypotensiveHypoxemiaAlert(
+            return factory.createAlert(
                     patient.getPatientId(),
                     "Low Systolic Pressure and Blood Saturation, Hypotensive Hypoxemia Alert",
-                    System.currentTimeMillis()
+                    System.currentTimeMillis(),
+                    0.0
             );
         }
 
