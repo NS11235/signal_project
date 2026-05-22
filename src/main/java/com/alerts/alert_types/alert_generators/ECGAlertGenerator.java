@@ -6,10 +6,13 @@ import com.alerts.alert_types.NoAlert;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;
 import java.util.List;
+import com.alerts.alert_types.alert_factories.ECGAlertFactory;;
 
 public class ECGAlertGenerator implements AlertGeneratorStrategy {
     private static final int SLIDING_WINDOW_SIZE = 10;
     private static final double OUTLIER_PEAK_SIZE = 2.0;
+
+    ECGAlertFactory factory = new ECGAlertFactory();
 
     public Alert evaluateData(Patient patient, List<PatientRecord> records) {
         if (records.size() <= SLIDING_WINDOW_SIZE) {
@@ -21,10 +24,11 @@ public class ECGAlertGenerator implements AlertGeneratorStrategy {
         double average = windowAverage(records, previousIndex);
 
         if (average > 0 && Math.abs(records.get(previousIndex).getMeasurementValue()) > OUTLIER_PEAK_SIZE * average) {
-            return new ECGAlert(
+            return factory.createAlert(
                     patient.getPatientId(),
                     "Abnormal ECG Peak",
-                    records.get(previousIndex).getTimestamp()
+                    records.get(previousIndex).getTimestamp(),
+                    0.0
             );
         }
 
