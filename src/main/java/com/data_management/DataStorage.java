@@ -22,6 +22,7 @@ import com.data_management.file_reading.FileParser;
 public class DataStorage {
     private static DataStorage instance;
     private Map<Integer, Patient> patientMap; // Stores patient objects indexed by their unique patient ID.
+    private Map<Integer, List<Alert>>  alertMap;
 
     /**
      * Constructs a new instance of DataStorage, initializing the underlying storage
@@ -29,6 +30,7 @@ public class DataStorage {
      */
     private DataStorage() {
         this.patientMap = new HashMap<>();
+        this.alertMap = new HashMap<>();
     }
 
     /**
@@ -60,6 +62,18 @@ public class DataStorage {
             patientMap.put(patientId, patient);
         }
         patient.addRecord(measurementValue, recordType, timestamp);
+    }
+
+    public void addAlertDataFromGenerator(List<Alert> alerts) {
+        if (alertMap.containsKey(alerts.get(0).getPatientId())) {
+            for (Alert alert : alerts) {
+                alertMap.get(alerts.get(0).getPatientId()).add(alert);
+            }
+        }
+    }
+
+    public List<Alert> getPatientAlerts(int patiendID) {
+        return alertMap.get(patiendID);
     }
 
     /**
@@ -124,6 +138,7 @@ public class DataStorage {
         AlertOutput output = new AlertOutput(new ConsoleAlertOutputStrategy());
         for (Patient patient : storage.getAllPatients()) {
             List<Alert> alerts = alertGenerator.generateAlerts(patient);
+            storage.addAlertDataFromGenerator(alerts);
             output.outputAlerts(alerts);
         }
     }
