@@ -95,6 +95,10 @@ public class WebSocketClientReader extends WebSocketClient implements DataReader
         }
     }
 
+    public void readData_forTestOnly(DataStorage dataStorage) {
+        this.dataStorage = dataStorage;
+    }
+
     public static WebSocketClientReader create(String url) throws IOException {
         try {
             return new WebSocketClientReader(new URI(url));
