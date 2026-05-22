@@ -6,9 +6,11 @@ import com.alerts.alert_types.NoAlert;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;
 import java.util.List;
+import com.alerts.alert_types.alert_factories.BloodOxygenAlertFactory;
 
 public class BloodSaturationAlertGenerator implements AlertGeneratorStrategy {
 
+    BloodOxygenAlertFactory factory = new BloodOxygenAlertFactory();
     public Alert evaluateData(Patient patient, List<PatientRecord> records) {
         return checkSaturation(patient, records);
     }
@@ -20,7 +22,7 @@ public class BloodSaturationAlertGenerator implements AlertGeneratorStrategy {
 
         double latestSaturation = records.get(records.size() - 1).getMeasurementValue();
         if (latestSaturation < 92) {
-            return new BloodSaturationAlert(patient.getPatientId(),
+            return factory.createAlert(patient.getPatientId(),
                     "Low Saturation",
                     System.currentTimeMillis(),
                     latestSaturation);
@@ -39,7 +41,7 @@ public class BloodSaturationAlertGenerator implements AlertGeneratorStrategy {
                 double secondValue = record.getMeasurementValue();
                 double dropValue = firstValue - secondValue;
                 if (dropValue >= 5) {
-                    return new BloodSaturationAlert(
+                    return factory.createAlert(
                             patient.getPatientId(),
                             "Rapid Saturation Drop",
                             System.currentTimeMillis(),
