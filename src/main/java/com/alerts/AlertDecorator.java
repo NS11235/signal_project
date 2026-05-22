@@ -1,10 +1,16 @@
 package com.alerts;
 
 import com.alerts.alert_types.Alert;
-
+/** Abstract base decorator for alerts
+*/
 public abstract class AlertDecorator implements Alert {
     public  Alert decoratedAlert;
 
+      /**
+     * Wraps the given alert.
+     *
+     * @param alert the alert to decorate
+     */
     public AlertDecorator(Alert alert) {
         this.decoratedAlert= alert;
     }
