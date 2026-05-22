@@ -6,11 +6,17 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
-
+/** Reads patient data and stores it in DataStorage. */
 public class FileParser implements DataReader {
 
     String path;
 
+    /**
+     * Constructs a FileParser for the directory given in args[0].
+     *
+     * @param args command-line arguments; args[0] must be a valid directory path
+     * @throws IOException if args is empty or the path is not a valid directory
+     */
     public FileParser(String[] args) throws IOException {
         if (args.length == 0) {
             throw new IOException("Directory path cannot be empty");
@@ -22,6 +28,12 @@ public class FileParser implements DataReader {
         }
     }
 
+    /**
+     * Reads all .txt files in the directory and stores parsed records in dataStorage.
+     *
+     * @param dataStorage the storage where parsed records will be saved
+     * @throws FileNotFoundException if no .txt files are found in the directory
+     */
     @Override
     public void readData(DataStorage dataStorage) throws FileNotFoundException {
         File dir = new File(path);
