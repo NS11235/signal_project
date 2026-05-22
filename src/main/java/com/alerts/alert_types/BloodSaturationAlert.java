@@ -1,5 +1,7 @@
 package com.alerts.alert_types;
-
+/**
+ * Alert for the oxgen in the blood
+ */
 public class BloodSaturationAlert extends AlertClassic implements Alert {
 
     private double saturationValue;
