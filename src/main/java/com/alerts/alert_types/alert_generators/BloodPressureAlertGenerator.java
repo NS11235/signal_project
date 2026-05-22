@@ -22,8 +22,14 @@ public class BloodPressureAlertGenerator implements AlertGeneratorStrategy {
             }
         }
 
-        checkTrend(patient, systolicRecords, "SystolicPressure");
-        checkTrend(patient, diastolicRecords, "DiastolicPressure");
+        Alert trendAlert1 = checkTrend(patient, systolicRecords, "SystolicPressure");
+        Alert trendAlert2 = checkTrend(patient, diastolicRecords, "DiastolicPressure");
+
+        if (trendAlert1 instanceof BloodPressureAlert) {
+            return trendAlert1;
+        } else if (trendAlert2 instanceof BloodPressureAlert) {
+            return trendAlert2;
+        }
 
         if (!systolicRecords.isEmpty()) {
             double latestSystolic = systolicRecords.get(systolicRecords.size() - 1).getMeasurementValue();

@@ -82,9 +82,6 @@ public class BloodPressureAlertGeneratorTest {
         BloodPressureAlertGenerator generator = new BloodPressureAlertGenerator();
         Alert alert = generator.evaluateData(patient, records);
 
-        System.out.println(alert.getPatientId());
-        System.out.println(patient.getPatientId());
-
         assert alert.getPatientId() == patient.getPatientId();
         assert alert.getCondition().equals("SystolicPressure Trend Increasing");
         assert alert.getTimestamp() <= System.currentTimeMillis();
@@ -106,5 +103,71 @@ public class BloodPressureAlertGeneratorTest {
         assert alert.getPatientId() == patient.getPatientId();
         assert alert.getCondition().equals("SystolicPressure Trend Decreasing");
         assert alert.getTimestamp() <= System.currentTimeMillis();
+    }
+
+    @Test
+    void testDiastolicIncreasingTrendTriggersAlert() {
+        Patient patient = new Patient(1);
+        long now = System.currentTimeMillis();
+        patient.addRecord(70, "DiastolicPressure", now - 2000);
+        patient.addRecord(85, "DiastolicPressure", now - 1000);
+        patient.addRecord(100, "DiastolicPressure", now);
+
+        List<PatientRecord> records = patient.getRecords(0, System.currentTimeMillis());
+        BloodPressureAlertGenerator generator = new BloodPressureAlertGenerator();
+        Alert alert = generator.evaluateData(patient, records);
+
+        assert alert.getPatientId() == patient.getPatientId();
+        assert alert.getCondition().equals("DiastolicPressure Trend Increasing");
+        assert alert.getTimestamp() <= System.currentTimeMillis();
+    }
+
+    @Test
+    void testDiastolicDecreasingTrendTriggersAlert() {
+        Patient patient = new Patient(1);
+        long now = System.currentTimeMillis();
+        patient.addRecord(100, "DiastolicPressure", now - 2000);
+        patient.addRecord(85, "DiastolicPressure", now - 1000);
+        patient.addRecord(70, "DiastolicPressure", now);
+
+        List<PatientRecord> records = patient.getRecords(0, System.currentTimeMillis());
+        BloodPressureAlertGenerator generator = new BloodPressureAlertGenerator();
+        Alert alert = generator.evaluateData(patient, records);
+
+        assert alert.getPatientId() == patient.getPatientId();
+        assert alert.getCondition().equals("DiastolicPressure Trend Decreasing");
+        assert alert.getTimestamp() <= System.currentTimeMillis();
+    }
+
+    @Test
+    void testNormalReadingsProduceNoAlert() {
+        Patient patient = new Patient(1);
+        long now = System.currentTimeMillis();
+        patient.addRecord(120, "SystolicPressure", now - 2000);
+        patient.addRecord(122, "SystolicPressure", now - 1000);
+        patient.addRecord(121, "SystolicPressure", now);
+        patient.addRecord(80, "DiastolicPressure", now - 2000);
+        patient.addRecord(81, "DiastolicPressure", now - 1000);
+        patient.addRecord(80, "DiastolicPressure", now);
+
+        List<PatientRecord> records = patient.getRecords(0, System.currentTimeMillis());
+        BloodPressureAlertGenerator generator = new BloodPressureAlertGenerator();
+        Alert alert = generator.evaluateData(patient, records);
+
+        assert alert.getPatientId() == 0;
+        assert alert.getCondition().equals("no condition");
+        assert alert.getTimestamp() <= System.currentTimeMillis();
+    }
+
+    @Test
+    void testEmptyRecordsProduceNoAlert() {
+        Patient patient = new Patient(1);
+
+        List<PatientRecord> records = patient.getRecords(0, System.currentTimeMillis());
+        BloodPressureAlertGenerator generator = new BloodPressureAlertGenerator();
+        Alert alert = generator.evaluateData(patient, records);
+
+        assert alert.getPatientId() == 0;
+        assert alert.getCondition().equals("no condition");
     }
 }
