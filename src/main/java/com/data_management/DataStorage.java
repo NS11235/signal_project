@@ -22,7 +22,7 @@ import com.data_management.WebSocketClientReader;
  */
 public class DataStorage {
     private static DataStorage instance;
-    private Map<Integer, Patient> patientMap; // Stores patient objects indexed by their unique patient ID.
+    private Map<Integer, Patient> patientMap; 
     private Map<Integer, List<Alert>>  alertMap;
 
     /**
@@ -42,10 +42,8 @@ public class DataStorage {
      *
      * @param patientId        the unique identifier of the patient
      * @param measurementValue the value of the health metric being recorded
-     * @param recordType       the type of record, e.g., "HeartRate",
-     *                         "BloodPressure"
-     * @param timestamp        the time at which the measurement was taken, in
-     *                         milliseconds since the Unix epoch
+     * @param recordType       the type of record
+     * @param timestamp        the time at which the measurement was taken
      */
     public static DataStorage getInstance() 
     { 
@@ -83,10 +81,8 @@ public class DataStorage {
      *
      * @param patientId the unique identifier of the patient whose records are to be
      *                  retrieved
-     * @param startTime the start of the time range, in milliseconds since the Unix
-     *                  epoch
-     * @param endTime   the end of the time range, in milliseconds since the Unix
-     *                  epoch
+     * @param startTime the start of the time range
+     * @param endTime   the end of the time range
      * @return a list of PatientRecord objects that fall within the specified time
      *         range
      */
@@ -95,7 +91,7 @@ public class DataStorage {
         if (patient != null) {
             return patient.getRecords(startTime, endTime);
         }
-        return new ArrayList<>(); // return an empty list if no patient is found
+        return new ArrayList<>(); 
     }
 
     /**
