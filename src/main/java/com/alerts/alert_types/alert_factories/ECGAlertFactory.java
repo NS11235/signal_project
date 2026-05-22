@@ -7,6 +7,6 @@ public class ECGAlertFactory extends AlertFactory {
     @Override
     public AlertClassic createAlert(int patientId, String condition, long timestamp, double value)
     {
-        return new ECGAlert(patientId, "ECG" + condition, timestamp);
+        return new ECGAlert(patientId, condition, timestamp);
     }
 }
