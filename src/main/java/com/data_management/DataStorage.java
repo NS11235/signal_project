@@ -12,6 +12,7 @@ import com.alerts.alert_types.Alert;
 import com.alerts.alert_types.alert_generators.AlertGenerator;
 import com.data_management.file_reading.DataReader;
 import com.data_management.file_reading.FileParser;
+import com.data_management.WebSocketClientReader;
 
 /**
  * Manages storage and retrieval of patient data within a healthcare monitoring
@@ -38,6 +39,13 @@ public class DataStorage {
      * If the patient does not exist, a new Patient object is created and added to
      * the storage.
      * Otherwise, the new data is added to the existing patient's records.
+     *
+     * @param patientId        the unique identifier of the patient
+     * @param measurementValue the value of the health metric being recorded
+     * @param recordType       the type of record, e.g., "HeartRate",
+     *                         "BloodPressure"
+     * @param timestamp        the time at which the measurement was taken, in
+     *                         milliseconds since the Unix epoch
      */
     public static DataStorage getInstance() 
     { 
@@ -108,7 +116,7 @@ public class DataStorage {
      */
     public static void main(String[] args) throws IOException {
         // DataReader is not defined in this scope, should be initialized appropriately.
-        DataReader reader = new FileParser(args);
+        DataReader reader = WebSocketClientReader.create("ws://localhost:8080");  
         DataStorage storage = new DataStorage();
 
         // Assuming the reader has been properly initialized and can read data into the
