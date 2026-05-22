@@ -1,8 +1,6 @@
 package com.alerts.alert_types.alert_generators;
 
 import com.alerts.alert_types.Alert;
-import com.alerts.alert_outputs.AlertOutputStrategy;
-import com.alerts.alert_outputs.ConsoleAlertOutputStrategy;
 import com.alerts.alert_types.NoAlert;
 import com.data_management.DataStorage;
 import com.data_management.Patient;
@@ -20,7 +18,6 @@ import java.util.List;
 public class AlertGenerator {
     
     private final DataStorage dataStorage;
-    private final AlertOutputStrategy outputStrategy;
     private final List<AlertGeneratorStrategy> alertStrategies;
 
     /**
@@ -32,7 +29,6 @@ public class AlertGenerator {
      */
     public AlertGenerator(DataStorage dataStorage) {
         this.dataStorage = dataStorage;
-        this.outputStrategy = new ConsoleAlertOutputStrategy();
         this.alertStrategies = getStrategies();
     }
 
@@ -55,14 +51,17 @@ public class AlertGenerator {
      *
      * @param patient the patient data to evaluate for alert conditions
      */
-    public void evaluateData(Patient patient) {
+    public List<Alert> generateAlerts(Patient patient) {
         List<PatientRecord> records = dataStorage.getRecords(patient.getPatientId(), 0, Long.MAX_VALUE);
+        List<Alert> alerts = new ArrayList<>();
 
         for (AlertGeneratorStrategy strategy : alertStrategies) {
             Alert alert = strategy.evaluateData(patient, records);
             if (!(alert instanceof NoAlert)) {
-                outputStrategy.output(alert);
+                alerts.add(alert);
             }
         }
+
+        return alerts;
     }
 }
