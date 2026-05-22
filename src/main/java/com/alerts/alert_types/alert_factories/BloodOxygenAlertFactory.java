@@ -7,6 +7,6 @@ public class BloodOxygenAlertFactory extends AlertFactory {
     @Override
     public AlertClassic createAlert(int patientId, String condition, long timestamp, double value)
     {
-        return new BloodSaturationAlert(patientId, "Blood oxygen: " + condition, timestamp, value);
+        return new BloodSaturationAlert(patientId, condition, timestamp, value);
     }
 }
