@@ -38,13 +38,6 @@ public class DataStorage {
      * If the patient does not exist, a new Patient object is created and added to
      * the storage.
      * Otherwise, the new data is added to the existing patient's records.
-     *
-     * @param patientId        the unique identifier of the patient
-     * @param measurementValue the value of the health metric being recorded
-     * @param recordType       the type of record, e.g., "HeartRate",
-     *                         "BloodPressure"
-     * @param timestamp        the time at which the measurement was taken, in
-     *                         milliseconds since the Unix epoch
      */
     public static DataStorage getInstance() 
     { 
