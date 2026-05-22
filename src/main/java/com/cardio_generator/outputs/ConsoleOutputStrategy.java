@@ -1,5 +1,5 @@
 package com.cardio_generator.outputs;
-
+/** Outputs patient data to the console. */
 public class ConsoleOutputStrategy implements OutputStrategy {
     @Override
     public void output(int patientId, long timestamp, String label, String data) {
