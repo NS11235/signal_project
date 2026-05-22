@@ -7,6 +7,6 @@ public class BloodPressureAlertFactory extends AlertFactory {
     @Override
     public AlertClassic createAlert(int patientId, String condition, long timestamp, double value)
     {
-        return new BloodPressureAlert(patientId, "Blood-pressure: " + condition, timestamp, value);
+        return new BloodPressureAlert(patientId, condition, timestamp, value);
     }
 }
