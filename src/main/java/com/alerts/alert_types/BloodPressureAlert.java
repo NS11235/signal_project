@@ -1,5 +1,8 @@
 package com.alerts.alert_types;
 
+/**
+ * Alert for blood pressure.
+ */
 public class BloodPressureAlert extends AlertClassic implements Alert  {
 
     private double systolic;
@@ -14,10 +17,16 @@ public class BloodPressureAlert extends AlertClassic implements Alert  {
         }
     }
 
+    /**
+     * returns systolic valeu
+     */
     public double getSystolic() {
         return systolic;
     }
 
+    /**
+     *  diastolic value
+     */
     public double getDiastolic() {
         return diastolic;
     }
