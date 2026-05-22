@@ -3,7 +3,10 @@ package com.cardio_generator.generators;
 import java.util.Random;
 
 import com.cardio_generator.outputs.OutputStrategy;
-
+/**
+*Generates realistic heart activity, both systolic and 
+* diastolic
+ */
 public class BloodPressureDataGenerator implements PatientDataGenerator {
     private static final Random random = new Random();
 
@@ -22,6 +25,9 @@ public class BloodPressureDataGenerator implements PatientDataGenerator {
     }
 
     @Override
+    /**
+    *uses randomness for realism
+     */
     public void generate(int patientId, OutputStrategy outputStrategy) {
         try {
             int systolicVariation = random.nextInt(5) - 2; // -2, -1, 0, 1, or 2
